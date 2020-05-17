@@ -8,14 +8,14 @@
     if(!empty($email) && !empty($password)){
         if($db->query("SELECT * FROM members WHERE email = '$email'")->num_rows == 0){
             $db->query("INSERT INTO members (email, password, date_reg, date_lastseen) VALUES('$email', '$password', '$date', '$date')");
-            http_response_code(200);
+            echo "registration succeed";
         }
         else
         { 
-            http_response_code(400); 
+            echo "bad request (bad data)";
         }
     }
     else{
-        http_response_code(400); 
+        echo "bad request (null data)";
     }
 ?>
