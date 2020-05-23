@@ -7,20 +7,20 @@
             //Каст к интам
             $eventId = ctype_digit($_GET["event_id"]) ? intval($_GET["event_id"]) : null;
             $userId = ctype_digit($_GET["user_id"]) ? intval($_GET["user_id"]) : null;
+
             if($eventId !== null && $userId !== null){
-                //Записываем запрос на вступление на мероприятие
-                $res = SqlHelper::RequestUserJoin($eventId, $userId, $db);
+                //Согласуем участие пользователя на мероприятие
+                $res = SqlHelper::ApproveUserToEvent($eventId, $userId, $db);
                 if($res){
-                    // Обновляем кол-во запросов на вступление
-                    $resUpdate = SqlHelper::UpdateEventJoinRequestsCount($eventId, $db);
+                    //выпиливаем его из таблицы с запросами на вступление в мероприятие
+                    $resDelete = SqlHelper::DeleteRequestUserJoin($eventId, $userId, $db);
+
                     // Пишем ответ для вывода на мобиле (До JSON decode он будет непонятными символами)
-                    if($resUpdate){echo json_encode(ResponseWriter::http_response_header()[200]);}
+                    if($resDelete){echo json_encode(ResponseWriter::http_response_header()[200]);}
                     else{echo json_encode(ResponseWriter::http_response_header()[400]);}
 
                 }
-                else{
-                    echo json_encode(ResponseWriter::http_response_header()[400]);
-                }
+                else{echo json_encode(ResponseWriter::http_response_header()[400]);}
             }
             else{
                 echo json_encode(ResponseWriter::http_response_header()[400]);
