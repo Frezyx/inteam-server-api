@@ -20,6 +20,6 @@
         }
     }
     else{
-        echo "password of email ain't set";
+        echo "password or email ain't set";
     }
 ?>
