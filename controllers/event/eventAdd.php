@@ -11,20 +11,20 @@
                 
                 $id = mysqli_fetch_assoc($db->query("SELECT id FROM members WHERE email = '$email' AND password = '$password'"))['id'];
 
-                if(isset( $_POST["title"])){
-                    if(!empty( $_POST["title"])){
+                if(isset( $_POST["name"])){
+                    if(!empty( $_POST["name"])){
 
-                        $title = $_POST["title"];
-                        $db->query("INSERT INTO projects (title, leader) VALUES('$title', '$id')");
-                        echo "project successfully registered";
+                        $name = $_POST["name"];
+                        $db->query("INSERT INTO events (name, request_count, admin_id) VALUES('$name', 0, '$id')");
+                        echo "event successfully registered";
 
                     }  
                     else{
-                        echo "title is empty";
+                        echo "name is empty";
                     }
                 }
                 else{
-                    echo "title ain't set";
+                    echo "name ain't set";
                 }
             }
             else{

@@ -1,5 +1,7 @@
 <?php
     require_once("../../database/database.php");
+    require_once("../../utils/responseWriter.php");
+
     if(isset( $_POST["email"]) && isset($_POST["password"])){
         if(!empty( $_POST["email"]) && !empty($_POST["password"])){
 
@@ -16,8 +18,7 @@
                     SET date_lastseen = '$date' 
                     WHERE email = '$email' AND password = '$password'"
                 );
-                $result = mysqli_query($db, $sql);    
-                echo json_encode(mysqli_fetch_assoc($result));
+                ResponseWriter::getJsonArrayFromSqlResult($result);
             }
             else
             { 
